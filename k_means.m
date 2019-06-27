@@ -10,9 +10,9 @@ function result = k_means(dataset, minClusters, maxClusters, error, verbosis, pl
     %% Parâmetros
     nAmostras = size(dataset, 1);
     result.vrc = 0;
-    %% Diversas interações para verificar qual a melhor quantidade de clusteres com base no VRC
+    %% Diversas iterações para verificar qual a melhor quantidade de clusteres com base no VRC
     for K = minClusters:maxClusters
-        %% Escolhe K amostras aleatoriamente para ser os K centroides iniciais
+        %% Escolhe K amostras aleatoriamente para serem os K centroides iniciais
         rng(0);
         centroides = randperm(nAmostras);
         centroides = dataset(centroides(1:K), :);
@@ -23,8 +23,8 @@ function result = k_means(dataset, minClusters, maxClusters, error, verbosis, pl
         while (err > error)
             iter = iter + 1;
 
-            %% Calculo de distâncias
-            % Calcula a distância de cada amostra até os K centróides e atribui em
+            %% Cálculo de distâncias
+            % Calcula a distância de cada amostra até os K centroides e atribui em
             % indices qual o centroide mais próximo da amostra i.
             indices = zeros(nAmostras, 1);
             for i = 1:nAmostras
@@ -51,12 +51,12 @@ function result = k_means(dataset, minClusters, maxClusters, error, verbosis, pl
                 end
                 title("Agrupamento - Clusters: " + K + " Iteração " + iter);
             end
-            %% Recalculo dos centróides e do erro
+            %% Recálculo dos centroides e do erro
             prev_centroides = centroides;
             for i = 1:K
                 centroides(i, :) = mean(dataset(indices == i, :));
             end
-            % Armazena a maior distância entre os clusters das duas ultimas
+            % Armazena a maior distância entre os clusters das duas últimas
             % iterações.
             err = max(sum((prev_centroides' - centroides').^2));
         end
