@@ -13,7 +13,7 @@ function result = k_means(dataset, minClusters, maxClusters, error, verbosis, pl
     %% Diversas iterações para verificar qual a melhor quantidade de clusteres com base no VRC
     for K = minClusters:maxClusters
         %% Escolhe K amostras aleatoriamente para serem os K centroides iniciais
-        rng(0);
+        rng(1);
         centroides = randperm(nAmostras);
         centroides = dataset(centroides(1:K), :);
 
@@ -49,7 +49,7 @@ function result = k_means(dataset, minClusters, maxClusters, error, verbosis, pl
                     plot3(dataset(indices == i, 1), dataset(indices == i, 2), ...
                         dataset(indices == i, 3), '.');
                 end
-                title("Agrupamento - Clusters: " + K + " Iteração " + iter);
+                title("Agrupamento K-Means - Clusters: " + K + " Iteração " + iter);
             end
             %% Recálculo dos centroides e do erro
             prev_centroides = centroides;
@@ -88,7 +88,7 @@ function result = k_means(dataset, minClusters, maxClusters, error, verbosis, pl
         if plotSilhouette
             figure;
             silhouette(dataset, indices);
-            title("Largura de Silhueta - Clusters: " + K);
+            title("Largura de Silhueta K-Means - Clusters: " + K);
         end
         if vrc > result.vrc
             result.k = K;
